@@ -4,7 +4,8 @@ var app = new Vue({
         items: [],
         transaction: [],
         jumlahCart: 0,
-        total: 0
+        total: 0,
+        cart: []
     },
     methods: {
         getDataBook() {
@@ -43,12 +44,33 @@ var app = new Vue({
                 this.transaction.push(data)
             }
             this.jumlahCart = this.transaction.length
+            this.cart.push(data._id)
 
         },
         totalPembayaran() {
             this.transaction.forEach((transaksi) => {
                 this.total += transaksi.total
             })
+        },
+        checkout() {
+            // console.log(this.cart)
+            axios.post('http://localhost:3000/api/transactions', {
+                customer: "5a13d8b4f25502f90674fd5e",
+                book: this.cart,
+                total: this.total
+            })
+                .then((response) => {
+                    console.log(response)
+                    this.cart = []
+                    this.transaction = []
+                    this.total = 0
+                    alert("Thankyou for purchasing in our shop!")
+                    location.reload()
+                })
+                .catch((reason) => {
+                    console.log(reason)
+                })
+
         }
     },
 
