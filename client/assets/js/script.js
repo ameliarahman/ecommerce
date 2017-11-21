@@ -3,7 +3,8 @@ var app = new Vue({
     data: {
         items: [],
         transaction: [],
-        jumlahCart: 0
+        jumlahCart: 0,
+        total: 0
     },
     methods: {
         getDataBook() {
@@ -18,45 +19,36 @@ var app = new Vue({
         },
         addToCartShopping: function (data) {
             // console.log("Halooooooooooooooooooooooooooo")
-            const status = false
-            this.transaction.forEach((transaksi, index) => {
-
-                if (transaksi._id == data._id) {
-                    status = true
-                    data.quantity = transaksi.quantity + 1
-                    this.transaction.splice(index, 1, data)
-
-                }
-
-            })
-            if (!status) {
-                this.transaction.push({
-                    quantity: 1,
-                    total: data.harga,
-                    ...data
+            let status = false
+            if (this.transaction.length > 0) {
+                this.transaction.forEach((transaksi, index) => {
+                    if (transaksi._id == data._id) {
+                        status = true
+                        data.quantity = transaksi.quantity + 1
+                        data.total = data.quantity * transaksi.harga
+                        this.transaction.splice(index, 1, data)
+                    }
+                    // console.log("Halooooooooooooooooooo masuk sini ya")
+                    // console.log(transaksi._id, "====", data._id)
                 })
+
+                if (!status) {
+                    data.quantity = 1
+                    data.total = data.harga
+                    this.transaction.push(data)
+                }
+            } else {
+                data.quantity = 1
+                data.total = data.harga
+                this.transaction.push(data)
             }
-
-
-            // if (this.transaction.length < 1) {
-            //     // console.log("Masukkkkk if")
-            //     data.quantity = 1
-            //     data.total = data.harga
-            //     this.transaction.push(data)
-            // } else {
-            //     this.transaction.forEach(function (transaksi) {
-            //         if (transaksi._id == data._id) {
-            //             data.quantity += 1
-            //             data.total = data.quantity * data.harga
-            //         }
-            //     });
-            //     data.quantity = 1
-            //     data.total = data.harga
-            //     this.transaction.push(data)
-            // }
-            console.log(this.transaction)
             this.jumlahCart = this.transaction.length
 
+        },
+        totalPembayaran() {
+            this.transaction.forEach((transaksi) => {
+                this.total += transaksi.total
+            })
         }
     },
 

@@ -20,9 +20,11 @@ const createBook = (req, res) => {
 const getAllDataBook = (req, res) => {
     Book.find()
         .then((dataBooks) => {
-            res.status(200).send(dataBooks)
+            //console.log(dataBooks)
+             res.status(200).send(dataBooks)
         })
         .catch((reason) => {
+            //console.log(reason)
             res.status(500).send(reason)
         })
 }
