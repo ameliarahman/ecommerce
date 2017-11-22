@@ -4,5 +4,6 @@ const express = require('express'),
 
 /* GET users listing. */
 router.get('/', userController.getAllDataUser);
+router.post('/', userController.createUser);
 
 module.exports = router;

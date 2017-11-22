@@ -7,7 +7,8 @@ const userSchema = new Schema({
     username: {
         type: String,
         unique: true
-    }
+    },
+    isAdmin: Boolean
 })
 
 const User = mongoose.model('users', userSchema)

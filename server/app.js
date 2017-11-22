@@ -12,8 +12,9 @@ const express = require('express'),
   books = require('./routes/books'),
   transactions = require('./routes/transactions'),
   cors = require('cors');
-  mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
 var app = express();
+
 mongoose.connection.openUri(db, (err) => {
   if (err) console.log('database not connected')
   else console.log('database connected')

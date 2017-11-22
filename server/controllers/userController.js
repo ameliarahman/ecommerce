@@ -10,6 +10,25 @@ const getAllDataUser = (req, res) => {
         })
 }
 
+const createUser = (req, res) => {
+    User.create({
+        name: req.body.name,
+        password: req.body.password,
+        username: req.body.username,
+        isAdmin: req.body.isAdmin
+    })
+        .then((dataUser) => {
+            res.status(200).send({
+                message: "Data successfully inserted",
+                data: dataUser
+            })
+        })
+        .catch((reason) => {
+            res.status(500).send(reason)
+        })
+}
+
 module.exports = {
-    getAllDataUser
+    getAllDataUser,
+    createUser
 }

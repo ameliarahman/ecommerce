@@ -6,7 +6,10 @@ var app = new Vue({
         jumlahCart: 0,
         total: 0,
         cart: [],
-        history: []
+        history: [],
+        name: '',
+        username: '',
+        password: ''
     },
     methods: {
         getDataBook() {
@@ -66,7 +69,7 @@ var app = new Vue({
         checkout() {
             // console.log(this.cart)
             axios.post('http://localhost:3000/api/transactions', {
-                customer: "5a13d8b4f25502f90674fd5e",
+                customer: "5a155567e2b6552086139e2f",
                 book: this.cart,
                 total: this.total
             })
@@ -87,17 +90,35 @@ var app = new Vue({
         getHistoryCart() {
             axios.get('http://localhost:3000/api/transactions')
                 .then((dataHistory) => {
-                    this.history.push(dataHistory)
+                    this.history = dataHistory
                     console.log(this.history)
                 })
                 .catch((reason) => {
                     console.log(reason)
                 })
+        },
+        register() {
+            axios.post('http://localhost:3000/api/users', {
+                username: this.username,
+                name: this.name,
+                password: this.password,
+                isAdmin: false
+            })
+                .then((response) => {
+                    console.log(response)
+                    alert("Please login to start shopping!")
+                    location.reload()
+                })
+                .catch((reason) => {
+                    console.log(reason)
+                })
+
         }
     },
 
 
     created() {
         this.getDataBook()
+        this.getHistoryCart()
     }
 })

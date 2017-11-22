@@ -1,7 +1,6 @@
 const Transaction = require('../models/transactionModel')
 
 const createTransaction = (req, res) => {
-
     Transaction.create({
         customer: req.body.customer,
         date: new Date(),
@@ -19,6 +18,7 @@ const createTransaction = (req, res) => {
 const getTransaction = (req, res) => {
     Transaction.find()
         .populate('items')
+        .populate('customer')
         .then((dataTransactions) => {
             res.status(200).send(dataTransactions)
         })
