@@ -6,17 +6,18 @@ var app = new Vue({
         jumlahCart: 0,
         total: 0,
         cart: [],
-        history: [],
+        history: '',
         name: '',
         username: '',
-        password: ''
+        password: '',
+        err: ''
     },
     methods: {
         getDataBook() {
             axios.get("http://localhost:3000/api/books")
                 .then(({ data }) => {
                     this.items = data
-                    console.log('udah masuk items belum ', this.items)
+                    // console.log('udah masuk items belum ', this.items)
                 })
                 .catch((err) => {
                     console.log(err)
@@ -32,6 +33,7 @@ var app = new Vue({
                         data.quantity = transaksi.quantity + 1
                         data.total = data.quantity * transaksi.harga
                         this.transaction.splice(index, 1, data)
+
                     }
                     // console.log("Halooooooooooooooooooo masuk sini ya")
                     // console.log(transaksi._id, "====", data._id)
@@ -52,6 +54,7 @@ var app = new Vue({
 
         },
         totalPembayaran() {
+            this.total = 0
             this.transaction.forEach((transaksi) => {
                 this.total += transaksi.total
             })
@@ -61,6 +64,7 @@ var app = new Vue({
                 if (transaksi._id == id) {
                     this.transaction.splice(index, 1)
                     this.cart.splice(index, 1)
+                    this.total -= transaksi.total
                 }
                 this.jumlahCart = this.transaction.length
             })
@@ -90,11 +94,11 @@ var app = new Vue({
         getHistoryCart() {
             axios.get('http://localhost:3000/api/transactions')
                 .then((dataHistory) => {
-                    this.history = dataHistory
+                    this.history = dataHistory.data
                     console.log(this.history)
                 })
                 .catch((reason) => {
-                    console.log(reason)
+                    this.err = reason
                 })
         },
         register() {
@@ -106,11 +110,11 @@ var app = new Vue({
             })
                 .then((response) => {
                     console.log(response)
-                    alert("Please login to start shopping!")
+                    alert("Successfully registered. Please login to start shopping!")
                     location.reload()
                 })
                 .catch((reason) => {
-                    console.log(reason)
+                    this.err = "Username is already used"
                 })
 
         }
