@@ -30,26 +30,42 @@ const getAllDataBook = (req, res) => {
 }
 
 const updateDataBook = (req, res) => {
-    Book.findById(req.params.id)
-        .then((dataBook) => {
-            dataBook.title = req.body.title
-            dataBook.category = req.body.category
-            dataBook.harga = req.body.harga
-            dataBook.author = req.body.author
-            dataBook.stock = req.body.stock
-            dataBook.image_url = req.body.image_url
-
-            dataBook.save()
-                .then((data) => {
-                    res.send({
-                        data: data,
-                        message: "1 Book successfully updated!"
-                    })
-                })
-                .catch((reason) => {
-                    res.status(500).send(reason)
-                })
+    Book.update({
+        _id: req.params.id
+    }, {
+            title: req.body.title,
+            category: req.body.category,
+            harga: req.body.harga,
+            author: req.body.author,
+            stock: req.body.stock,
+            image_url: req.body.image_url
         })
+        .then((dataBook) => {
+            res.send(dataBook)
+        })
+        .catch((reason) => {
+            res.send(reason)
+        })
+    // Book.findById(req.params.id)
+    //     .then((dataBook) => {
+    //         dataBook.title = req.body.title
+    //         dataBook.category = req.body.category
+    //         dataBook.harga = req.body.harga
+    //         dataBook.author = req.body.author
+    //         dataBook.stock = req.body.stock
+    //         dataBook.image_url = req.body.image_url
+
+    //         dataBook.save()
+    //             .then((data) => {
+    //                 res.send({
+    //                     data: data,
+    //                     message: "1 Book successfully updated!"
+    //                 })
+    //             })
+    //             .catch((reason) => {
+    //                 res.status(500).send(reason)
+    //             })
+    //     })
 }
 
 const deleteBook = (req, res) => {

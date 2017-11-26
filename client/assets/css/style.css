@@ -25,7 +25,8 @@ table tbody td img{
     width: 20%;
     height: 15%;
 }
-ul{
+table ul,
+.container-fluid ul{
     list-style: none
 }
 /* On small screens, set height to 'auto' for sidenav and grid */

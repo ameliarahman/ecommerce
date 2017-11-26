@@ -44,51 +44,54 @@
                                 <h4 class="modal-title">Data Transaksi</h4>
                             </div>
                             <div class="modal-body">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Judul Buku</th>
-                                            <th>Harga @Buku</th>
-                                            <th>Quantity</th>
-                                            <th>Subtotal</th>
-                                            <th>Action</th>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Judul Buku</th>
+                                                <th>Harga @Buku</th>
+                                                <th>Quantity</th>
+                                                <th>Subtotal</th>
+                                                <th>Action</th>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="(transaksi, index) in transaction">
-                                            <td>
-                                                {{index+1}}
-                                            </td>
-                                            <td>
-                                                {{transaksi.title}}
-                                            </td>
-                                            <td>
-                                                {{transaksi.harga}}
-                                            </td>
-                                            <td>
-                                                {{transaksi.quantity}}
-                                            </td>
-                                            <td>
-                                                {{transaksi.total}}
-                                            </td>
-                                            <td>
-                                                <a href="#" v-on:click="removeItem(transaksi._id)"> Remove</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4">
-                                                Total Pembayaran
-                                            </td>
-                                            <td>
-                                                {{total}}
-                                            </td>
-                                        </tr>
-                                    </tbody>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(transaksi, index) in transaction">
+                                                <td>
+                                                    {{index+1}}
+                                                </td>
+                                                <td>
+                                                    {{transaksi.title}}
+                                                </td>
+                                                <td>
+                                                    {{transaksi.harga}}
+                                                </td>
+                                                <td>
+                                                    {{transaksi.quantity}}
+                                                </td>
+                                                <td>
+                                                    {{transaksi.total}}
+                                                </td>
+                                                <td>
+                                                    <a href="#" v-on:click="removeItem(transaksi._id)"> Remove</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">
+                                                    Total Pembayaran
+                                                </td>
+                                                <td>
+                                                    {{total}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
 
 
-                                </table>
+                                    </table>
+                                </div>
+
 
                             </div>
                             <div class=" modal-footer ">

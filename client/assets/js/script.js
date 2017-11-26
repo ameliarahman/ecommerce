@@ -10,7 +10,14 @@ var app = new Vue({
         name: '',
         username: '',
         password: '',
-        err: ''
+        err: '',
+        title: '',
+        author: '',
+        category: '',
+        image_url: '',
+        harga: '',
+        id: '',
+        stock: 0
     },
     methods: {
         getDataBook() {
@@ -127,6 +134,32 @@ var app = new Vue({
                 })
                 .catch((reason) => {
                     console.log(reason)
+                })
+        },
+        getDataEditBook: function (index) {
+            this.title = this.items[index].title
+            this.category = this.items[index].category
+            this.author = this.items[index].author
+            this.image_url = this.items[index].image_url
+            this.harga = this.items[index].harga
+            this.id = this.items[index]._id
+            this.stock = this.items[index].stock
+            // console.log("apakah saya di sini?", this.author)
+        },
+        updateBook: function () {
+            axios.put(`http://localhost:3000/api/books/${this.id}`, {
+                title: document.getElementById('newtitle').value,
+                category: document.getElementById('newcategory').value,
+                author: document.getElementById('newauthor').value,
+                harga: document.getElementById('newharga').value,
+                image_url: document.getElementById('newimage_url').value,
+                stock: document.getElementById('newstock').value
+            })
+                .then((dataBook) => {
+                    console.log(dataBook)
+                })
+                .catch((reason) => {
+                    alert(reason)
                 })
         }
     },

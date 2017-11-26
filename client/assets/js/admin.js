@@ -30,30 +30,35 @@ Vue.component('data-book', {
         </td>
         <td>
             <ul>
-                <li data-toggle="modal" data-target="#edit-book" @click=editBook(item)><a href="#">Edit</a></li>
+                <li data-toggle="modal" data-target="#edit-buku" @click=editBook(index)><a href="#">Edit</a></li>
             </ul>
         </td>
         <td>
             <a href="#" @click="deleteBook(item._id)">Delete</a>
-        </td>
-       
+        </td>   
     </tr>
     </tbody>
     </table>
+
     `,
     props: ['items'],
+    data: function () {
+        return {
+            item: ''
+        }
+    },
     methods: {
         deleteBook: function (id) {
             this.$emit('delete-book', {
                 idBook: id
             })
         },
-        editBook: function (book) {
-            console.log(book)
+        editBook: function (index) {
+            // console.log(book)
+            this.$emit('edit-book', index)
         }
     }
 })
-
 
 Vue.component('add-book', {
     template:
