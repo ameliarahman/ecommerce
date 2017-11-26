@@ -95,7 +95,7 @@ var app = new Vue({
             axios.get('http://localhost:3000/api/transactions')
                 .then((dataHistory) => {
                     this.history = dataHistory.data
-                    console.log(this.history)
+                    // console.log(this.history)
                 })
                 .catch((reason) => {
                     this.err = reason
@@ -117,6 +117,17 @@ var app = new Vue({
                     this.err = "Username is already used"
                 })
 
+        },
+        deleteOneBook: function (book) {
+            console.log(book)
+            axios.delete(`http://localhost:3000/api/books/${book.idBook}`)
+                .then((data) => {
+                    alert("1 book deleted!")
+                    location.reload()
+                })
+                .catch((reason) => {
+                    console.log(reason)
+                })
         }
     },
 

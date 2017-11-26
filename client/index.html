@@ -1,7 +1,7 @@
 <html lang="en">
 
 <head>
-    <title>E-Commerce</title>
+    <title>Kids BookStore</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -25,8 +25,8 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="index.html">BookStore</a></li>
                     <li class="dropdown-toggle" data-toggle="dropdown"><a href="#">Category</a>
-
                     </li>
+                    <li><a href="books.html">Books</a> </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li data-toggle="modal" data-target="#cart" v-on:click="totalPembayaran()"><a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>{{jumlahCart}} Cart</a></li>
@@ -182,7 +182,7 @@
                         <div class="col-sm-6 " v-for="item in items ">
                             <div class="card ">
                                 <h3 class="card-header ">{{item.title}}</h3>
-                                <img v-bind:src=item.image_url alt="Card image ">
+                                <img v-bind:src=item.image_url alt="Card image">
                                 <div class="card-body ">
                                     <p class="card-text ">
                                         <h5>
@@ -238,7 +238,7 @@
         <p>Kids' BookStore</p>
     </footer>
     </div>
-
+    <script src="assets/js/admin.js "></script>
     <script src="assets/js/script.js "></script>
 </body>
 
