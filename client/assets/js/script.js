@@ -49,7 +49,7 @@ var app = new Vue({
                 data.total = data.harga
                 this.transaction.push(data)
             }
-            this.jumlahCart = this.transaction.length
+            this.jumlahCart += 1
             this.cart.push(data._id)
 
         },
@@ -119,10 +119,10 @@ var app = new Vue({
 
         },
         deleteOneBook: function (book) {
-            console.log(book)
+            // console.log(book)
             axios.delete(`http://localhost:3000/api/books/${book.idBook}`)
                 .then((data) => {
-                    alert("1 book deleted!")
+                    alert("Deleted 1 book!")
                     location.reload()
                 })
                 .catch((reason) => {
