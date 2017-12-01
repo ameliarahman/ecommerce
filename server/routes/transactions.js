@@ -4,6 +4,6 @@ const express = require('express'),
 
 /* GET users listing. */
 router.post('/', transactionController.createTransaction);
-router.get('/', transactionController.getTransaction);
+router.get('/:id', transactionController.getTransaction);
 
 module.exports = router;

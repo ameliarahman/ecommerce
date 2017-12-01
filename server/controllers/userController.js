@@ -1,5 +1,7 @@
 const User = require('../models/userModel')
 const Encrypt = require('../helpers/encrypt')
+const Decrypt = require('../helpers/decrypt')
+const jwt = require('jsonwebtoken')
 
 const getAllDataUser = (req, res) => {
     User.find()
@@ -48,8 +50,46 @@ const createUser = (req, res) => {
 
 }
 
+const signInUser = (req, res) => {
+    User.findOne({
+        username: req.body.username
+    }).then((dataUser) => {
+        if (!dataUser) {
+            res.status(401).json({
+                message: "Authentication failed. User not found"
+            })
+        } else {
+            Decrypt(req.body.password, dataUser.password).then((hasil) => {
+                if (!hasil) {
+                    res.status(401).json({
+                        message: "Authentication failed. Password is incorrect"
+                    })
+                } else {
+                    const payload = {
+                        isAdmin: dataUser.isAdmin,
+                        _id: dataUser._id,
+                        username: dataUser.username,
+                        isLogin: true
+                    }
+                    jwt.sign(payload, process.env.secret, function (err, token) {
+                        if (err) {
+                            throw err
+                        } else {
+                            res.send({
+                                message: "Login berhasil",
+                                token: token,
+                                data: payload
+                            })
+                        }
+                    })
+                }
+            })
+        }
+    })
+}
 module.exports = {
     getAllDataUser,
     createUser,
-    deleteUser
+    deleteUser,
+    signInUser
 }

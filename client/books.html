@@ -22,12 +22,91 @@
                     <li><a href="index.html">BookStore</a></li>
                     <li class="dropdown-toggle" data-toggle="dropdown"><a href="#">Category</a>
                     </li>
-                    <li class="active"><a href="books.html">Books</a> </li>
+                    <li id="bookId" class="active"><a href="books.html">Books</a> </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <!-- <li v-on:click="logout"><a href="#">Log Out
-                        </a></li> -->
+                    <li id="signinId" data-toggle="modal" data-target="#signin"><a href="#">Sign In</a></li> ||
+                    <li id="registerId" data-toggle="modal" data-target="#register"><a href="#">Register</a></li>
+                    <li id="logoutId"><a href="#" @click="logout">Logout</a></li>
                 </ul>
+                <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Large Modal</button> -->
+
+
+
+                <!-- Modal Sign In -->
+                <div class="modal fade" id="signin" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Login</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="username">Username:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="username" placeholder="Enter Username">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="password">Password:</label>
+                                        <div class="col-sm-8">
+                                            <input type="password" class="form-control" id="password" placeholder="Enter password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-8">
+                                            <button type="submit" class="btn btn-default" @click="login">Log In</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Register -->
+                <div class="modal fade" id="register" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Register</h4>
+                            </div>
+                            <p>
+                                {{err}}
+                            </p>
+                            <div class="modal-body">
+                                <form class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="name">Name:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="name" placeholder="Enter Name" v-model="name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="username">Username:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="username" placeholder="Enter Username" v-model="username">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="pwd">Password:</label>
+                                        <div class="col-sm-8">
+                                            <input type="password" class="form-control" id="pwd" placeholder="Enter password" v-model="password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-8">
+                                            <button type="submit" class="btn btn-default" v-on:click="register()">Register</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </nav>
         <div class="container-fluid">

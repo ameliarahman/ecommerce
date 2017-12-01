@@ -18,7 +18,10 @@ var app = new Vue({
         harga: '',
         id: '',
         stock: 0,
-        item: ''
+        item: '',
+        idUser: '',
+        token: localStorage.getItem('token'),
+        isAdmin: localStorage.getItem('admin')
     },
     methods: {
         getDataBook() {
@@ -31,31 +34,36 @@ var app = new Vue({
                 })
         },
         addToCartShopping: function (data) {
-            // console.log("Halooooooooooooooooooooooooooo")
-            let status = false
-            if (this.transaction.length > 0) {
-                this.transaction.forEach((transaksi, index) => {
-                    if (transaksi._id == data._id) {
-                        status = true
-                        data.quantity = transaksi.quantity + 1
-                        data.total = data.quantity * transaksi.harga
-                        this.transaction.splice(index, 1, data)
 
+            if (this.token == undefined) {
+                alert("Please login first!")
+            } else {
+                let status = false
+                if (this.transaction.length > 0) {
+                    this.transaction.forEach((transaksi, index) => {
+                        if (transaksi._id == data._id) {
+                            status = true
+                            data.quantity = transaksi.quantity + 1
+                            data.total = data.quantity * transaksi.harga
+                            this.transaction.splice(index, 1, data)
+
+                        }
+                    })
+
+                    if (!status) {
+                        data.quantity = 1
+                        data.total = data.harga
+                        this.transaction.push(data)
                     }
-                })
-
-                if (!status) {
+                } else {
                     data.quantity = 1
                     data.total = data.harga
                     this.transaction.push(data)
                 }
-            } else {
-                data.quantity = 1
-                data.total = data.harga
-                this.transaction.push(data)
+                this.jumlahCart += 1
+                this.cart.push(data._id)
             }
-            this.jumlahCart += 1
-            this.cart.push(data._id)
+
 
         },
         totalPembayaran() {
@@ -77,7 +85,7 @@ var app = new Vue({
         },
         checkout() {
             axios.post('http://localhost:3000/api/transactions', {
-                customer: "5a155567e2b6552086139e2f",
+                customer: this.idUser,
                 book: this.cart,
                 total: this.total
             })
@@ -95,8 +103,8 @@ var app = new Vue({
                 })
 
         },
-        getHistoryCart() {
-            axios.get('http://localhost:3000/api/transactions')
+        getHistoryCart(id) {
+            axios.get(`http://localhost:3000/api/transactions/${id}`)
                 .then((dataHistory) => {
                     this.history = dataHistory.data
                 })
@@ -122,6 +130,26 @@ var app = new Vue({
 
         },
         login() {
+            axios.post(`http://localhost:3000/api/users/signin`, {
+                username: document.getElementById("username").value,
+                password: document.getElementById("password").value
+            })
+                .then((dataUser) => {
+                    console.log(dataUser)
+                    localStorage.setItem('token', dataUser.data.token)
+                    localStorage.setItem('id', dataUser.data.data._id)
+                    localStorage.setItem('admin', dataUser.data.data.isAdmin)
+                    if (!dataUser.data.data.isAdmin) {
+                        alert("Happy shopping, " + dataUser.data.data.username)
+                    }
+                    location.reload()
+                })
+                .catch((reason) => {
+                    console.log(reason)
+                    alert("Username or password is invalid")
+                })
+
+            // console.log(document.getElementById("username").value)
 
         },
         deleteOneBook: function (book) {
@@ -138,12 +166,37 @@ var app = new Vue({
 
             this.item = this.items[index]
             console.log(this.item)
+        },
+        logout() {
+            localStorage.removeItem('token')
+            localStorage.removeItem('admin')
+            localStorage.removeItem('id')
+            this.history = ''
+            alert("Sampai jumpa")
+            location.reload()
         }
     },
 
 
     created() {
         this.getDataBook()
-        this.getHistoryCart()
+        if (this.token == undefined) {
+            document.getElementById('logoutId').style.display = "none"
+            document.getElementById('bookId').style.display = "none"
+        } else {
+            document.getElementById('registerId').style.display = "none"
+            document.getElementById('signinId').style.display = "none"
+            if (this.isAdmin == "false") {
+                document.getElementById('bookId').style.display = "none"
+            }
+
+        }
+    },
+    mounted() {
+        if (this.token != undefined) {
+            this.idUser = localStorage.getItem('id')
+            this.getHistoryCart(this.idUser)
+        }
+
     }
 })

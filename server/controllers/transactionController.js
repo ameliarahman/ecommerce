@@ -17,7 +17,7 @@ const createTransaction = (req, res) => {
 
 const getTransaction = (req, res) => {
     Transaction.find({
-        customer: "5a155567e2b6552086139e2f"
+        customer: req.params.id
     })
         .populate('items')
         .populate('customer')
