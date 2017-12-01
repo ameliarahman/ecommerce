@@ -54,13 +54,13 @@
                     <li class="active"><a href="index.html">BookStore</a></li>
                     <li class="dropdown-toggle" data-toggle="dropdown"><a href="#">Category</a>
                     </li>
-                    <li id="bookId"><a href="books.html">Books</a> </li>
+                    <li v-show="isAdmin == 'true' " id="bookId"><a href="books.html">Books</a> </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li data-toggle="modal" data-target="#cart" v-on:click="totalPembayaran()"><a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>{{jumlahCart}} Cart</a></li>
-                    <li id="signinId" data-toggle="modal" data-target="#signin"><a href="#">Sign In</a></li> ||
-                    <li id="registerId" data-toggle="modal" data-target="#register"><a href="#">Register</a></li>
-                    <li id="logoutId"><a href="#" @click="logout">Logout</a></li>
+                    <li v-show="token == undefined" id="signinId" data-toggle="modal" data-target="#signin"><a href="#">Sign In</a></li> ||
+                    <li v-show="token == undefined" id="registerId" data-toggle="modal" data-target="#register"><a href="#">Register</a></li>
+                    <li v-show="token != undefined" id="logoutId"><a href="#" @click="logout">Logout</a></li>
                 </ul>
                 <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Large Modal</button> -->
 
@@ -144,13 +144,13 @@
                                     <div class="form-group">
                                         <label class="control-label col-sm-2" for="username">Username:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="username" placeholder="Enter Username">
+                                            <input type="text" class="form-control" v-model="username" placeholder="Enter Username">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-sm-2" for="password">Password:</label>
                                         <div class="col-sm-8">
-                                            <input type="password" class="form-control" id="password" placeholder="Enter password">
+                                            <input type="password" class="form-control" v-model="password" placeholder="Enter password">
                                         </div>
                                     </div>
                                     <div class="form-group">

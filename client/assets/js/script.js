@@ -120,7 +120,7 @@ var app = new Vue({
                 isAdmin: false
             })
                 .then((response) => {
-                    console.log(response)
+                    setTimeout(5000)
                     alert("Successfully registered. Please login to start shopping!")
                     location.reload()
                 })
@@ -131,18 +131,17 @@ var app = new Vue({
         },
         login() {
             axios.post(`http://localhost:3000/api/users/signin`, {
-                username: document.getElementById("username").value,
-                password: document.getElementById("password").value
+                username: this.username,
+                password: this.password
             })
                 .then((dataUser) => {
-                    console.log(dataUser)
                     localStorage.setItem('token', dataUser.data.token)
                     localStorage.setItem('id', dataUser.data.data._id)
                     localStorage.setItem('admin', dataUser.data.data.isAdmin)
-                    if (!dataUser.data.data.isAdmin) {
-                        alert("Happy shopping, " + dataUser.data.data.username)
-                    }
+                    setTimeout(5000)
+                    alert("Halooo, " + dataUser.data.data.username)
                     location.reload()
+
                 })
                 .catch((reason) => {
                     console.log(reason)
@@ -153,9 +152,10 @@ var app = new Vue({
 
         },
         deleteOneBook: function (book) {
+
             axios.delete(`http://localhost:3000/api/books/${book.idBook}`)
                 .then((data) => {
-                    alert("Deleted 1 book!")
+                    alert("Deleted 1 book...")
                     location.reload()
                 })
                 .catch((reason) => {
@@ -173,24 +173,12 @@ var app = new Vue({
             localStorage.removeItem('id')
             this.history = ''
             alert("Sampai jumpa")
-            location.reload()
+            location.replace('http://127.0.0.1:8080/')
         }
     },
-
-
     created() {
         this.getDataBook()
-        if (this.token == undefined) {
-            document.getElementById('logoutId').style.display = "none"
-            document.getElementById('bookId').style.display = "none"
-        } else {
-            document.getElementById('registerId').style.display = "none"
-            document.getElementById('signinId').style.display = "none"
-            if (this.isAdmin == "false") {
-                document.getElementById('bookId').style.display = "none"
-            }
 
-        }
     },
     mounted() {
         if (this.token != undefined) {
