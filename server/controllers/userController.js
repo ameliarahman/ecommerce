@@ -11,6 +11,21 @@ const getAllDataUser = (req, res) => {
         })
 }
 
+const deleteUser = (req, res) => {
+    User.remove({
+        _id: req.params.id
+    })
+        .then((dataUser) => {
+            res.status(200).send({
+                message: "Successfully deleted!",
+                data: dataUser
+            })
+        })
+        .catch((reason) => {
+            res.status(500).send(reason)
+        })
+}
+
 const createUser = (req, res) => {
     Encrypt(req.body.password).then((newPassword) => {
         console.log(newPassword)
@@ -35,5 +50,6 @@ const createUser = (req, res) => {
 
 module.exports = {
     getAllDataUser,
-    createUser
+    createUser,
+    deleteUser
 }

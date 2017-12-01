@@ -17,14 +17,14 @@ var app = new Vue({
         image_url: '',
         harga: '',
         id: '',
-        stock: 0
+        stock: 0,
+        item: ''
     },
     methods: {
         getDataBook() {
             axios.get("http://localhost:3000/api/books")
                 .then(({ data }) => {
                     this.items = data
-                    // console.log('udah masuk items belum ', this.items)
                 })
                 .catch((err) => {
                     console.log(err)
@@ -42,8 +42,6 @@ var app = new Vue({
                         this.transaction.splice(index, 1, data)
 
                     }
-                    // console.log("Halooooooooooooooooooo masuk sini ya")
-                    // console.log(transaksi._id, "====", data._id)
                 })
 
                 if (!status) {
@@ -78,7 +76,6 @@ var app = new Vue({
 
         },
         checkout() {
-            // console.log(this.cart)
             axios.post('http://localhost:3000/api/transactions', {
                 customer: "5a155567e2b6552086139e2f",
                 book: this.cart,
@@ -102,7 +99,6 @@ var app = new Vue({
             axios.get('http://localhost:3000/api/transactions')
                 .then((dataHistory) => {
                     this.history = dataHistory.data
-                    // console.log(this.history)
                 })
                 .catch((reason) => {
                     this.err = reason
@@ -125,8 +121,10 @@ var app = new Vue({
                 })
 
         },
+        login() {
+
+        },
         deleteOneBook: function (book) {
-            // console.log(book)
             axios.delete(`http://localhost:3000/api/books/${book.idBook}`)
                 .then((data) => {
                     alert("Deleted 1 book!")
@@ -137,30 +135,9 @@ var app = new Vue({
                 })
         },
         getDataEditBook: function (index) {
-            this.title = this.items[index].title
-            this.category = this.items[index].category
-            this.author = this.items[index].author
-            this.image_url = this.items[index].image_url
-            this.harga = this.items[index].harga
-            this.id = this.items[index]._id
-            this.stock = this.items[index].stock
-            // console.log("apakah saya di sini?", this.author)
-        },
-        updateBook: function () {
-            axios.put(`http://localhost:3000/api/books/${this.id}`, {
-                title: document.getElementById('newtitle').value,
-                category: document.getElementById('newcategory').value,
-                author: document.getElementById('newauthor').value,
-                harga: document.getElementById('newharga').value,
-                image_url: document.getElementById('newimage_url').value,
-                stock: document.getElementById('newstock').value
-            })
-                .then((dataBook) => {
-                    console.log(dataBook)
-                })
-                .catch((reason) => {
-                    alert(reason)
-                })
+
+            this.item = this.items[index]
+            console.log(this.item)
         }
     },
 

@@ -29,6 +29,13 @@ table ul,
 .container-fluid ul{
     list-style: none
 }
+.jumbotron{
+    background-color: white
+}
+.jumbotron .carousel-inner img{
+    height: 50%;
+    width: 100%;
+}
 /* On small screens, set height to 'auto' for sidenav and grid */
 
 @media screen and (max-width: 767px) {
