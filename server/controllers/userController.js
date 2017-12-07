@@ -71,7 +71,7 @@ const signInUser = (req, res) => {
                         username: dataUser.username,
                         isLogin: true
                     }
-                    jwt.sign(payload, process.env.secret, function (err, token) {
+                    jwt.sign(payload, "adnfnewofhp3hfo32ihf2o3hfogh43iogf", function (err, token) {
                         if (err) {
                             throw err
                         } else {

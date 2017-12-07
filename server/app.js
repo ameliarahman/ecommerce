@@ -15,7 +15,7 @@ const express = require('express'),
 mongoose.Promise = global.Promise;
 var app = express();
 
-mongoose.connection.openUri(db, (err) => {
+mongoose.connection.openUri("mongodb://amelia:amelia@cluster0-shard-00-00-71yp9.mongodb.net:27017,cluster0-shard-00-01-71yp9.mongodb.net:27017,cluster0-shard-00-02-71yp9.mongodb.net:27017/ecommerce?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin", (err) => {
   if (err) console.log('database not connected')
   else console.log('database connected')
 })

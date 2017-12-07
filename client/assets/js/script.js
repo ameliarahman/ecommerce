@@ -138,7 +138,6 @@ var app = new Vue({
                     localStorage.setItem('token', dataUser.data.token)
                     localStorage.setItem('id', dataUser.data.data._id)
                     localStorage.setItem('admin', dataUser.data.data.isAdmin)
-                    setTimeout(5000)
                     alert("Halooo, " + dataUser.data.data.username)
                     location.reload()
 
